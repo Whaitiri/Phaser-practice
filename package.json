@@ -1,0 +1,23 @@
+{
+  "name": "phaser-prac",
+  "version": "1.0.0",
+  "description": "phaser-prac",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Whaitiri/Phaser-practice.git"
+  },
+  "keywords": [
+    "phaser",
+    "js"
+  ],
+  "author": "tuterangi pleydell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Whaitiri/Phaser-practice/issues"
+  },
+  "homepage": "https://github.com/Whaitiri/Phaser-practice#readme"
+}
