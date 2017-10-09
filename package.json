@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/Whaitiri/Phaser-practice/issues"
   },
-  "homepage": "https://github.com/Whaitiri/Phaser-practice#readme"
+  "homepage": "https://github.com/Whaitiri/Phaser-practice#readme",
+  "dependencies": {
+    "phaser-ce": "^2.9.0"
+  }
 }
