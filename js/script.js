@@ -14,6 +14,7 @@ var inAirText;
 var isMoving = false;
 var layer;
 var map;
+var globalGravity = 150;
 
 
 function preload() {
@@ -35,8 +36,8 @@ function create() {
 
 	game.physics.startSystem(Phaser.Physics.P2JS);
 
-	game.physics.p2.gravity.y = 350;
-	game.physics.p2.world.defaultContactMaterial.friction = 0.3;
+	game.physics.p2.gravity.y = globalGravity;
+	game.physics.p2.world.defaultContactMaterial.friction = 0;
 	// game.physics.p2.world.setGlobalSitffness(1e5);
 
 
@@ -109,9 +110,9 @@ function update() {
 		scoreText.text = 'Score: ' + score;
 	}
 
-	gravityText.text = "gravity: " + game.physics.p2.gravity.y ;
-	velocityText.text = "jump velocity: " + player.body.velocity.x;
-	inAirText.text = "in motion" + isMoving;
+	gravityText.text = "gravity: " + player.body.gravity.y;
+	velocityText.text = "velocity: " + player.body.velocity.x;
+	inAirText.text = "jumptimer" + jumpTimer;
 
 	//key presses
 	player.body.velocity.x = 0;
@@ -139,18 +140,20 @@ function update() {
 		isMoving = false;
 	}
 
-	if (isMoving && player.body.velocity.x > 0) {
-		isMoving = false;
-		player.body.velocity.x = 0;
-	}
-
-	if (cursors.up.downDuration(50) && checkIfCanJump()) {
-		player.body.velocity.y = -650;
+	if (cursors.up.downDuration(1) && checkIfCanJump()) {
+		player.body.velocity.y = -600;
 		isMoving = true;
 		inAir = true;
-	} else if (player.body.velocity.y > 0) {
-		isMoving = false;
-		inAir = false;
+		jumpTimer = game.time.now;
+	} else if (cursors.up.isDown && inAir && (jumpTimer != 0)) {
+		if (game.time.now - jumpTimer > 90) { 
+			jumpTimer = 0;
+		} else {
+			player.body.velocity.y = -600;
+		}
+	} else if (jumpTimer != 0) {
+		jumpTimer = 0;
+		player.body.gravity.y = globalGravity;
 	}
 
 	// while (cursors.up.isDown && inAir) {
@@ -176,14 +179,5 @@ function checkIfCanJump() {
     }
     
     return result;
-
-}
-
-function checkOverlap(spriteA, spriteB) {
-
-    var boundsA = spriteA.getBounds();
-    var boundsB = spriteB.getBounds();
-
-    return Phaser.Rectangle.intersects(boundsA, boundsB);
 
 }
