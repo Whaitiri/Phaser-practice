@@ -110,10 +110,18 @@ function update() {
 	}
 
 
-	if (cursors.up.downDuration(50) && player.body.touching.down && !jumpedTwice) {
-		player.body.velocity.y = -650;
-		if (cursors.up.downDuration(1000)) {
-			player.body.velocity.y = -1000;
+		if (cursors.up.downDuration(1) && player.body.touching.down) {
+		player.body.velocity.y = -600;
+		inAir = true;
+		jumpTimer = game.time.now;
+	} else if (cursors.up.isDown && inAir && (jumpTimer != 0)) {
+		if (game.time.now - jumpTimer > 90) { 
+			jumpTimer = 0;
+		} else {
+			player.body.velocity.y = -600;
 		}
+	} else if (jumpTimer != 0) {
+		jumpTimer = 0;
+		inAir = false;
 	}
 }
